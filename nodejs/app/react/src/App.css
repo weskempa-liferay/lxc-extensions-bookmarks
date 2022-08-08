@@ -1,0 +1,47 @@
+.bookmark-app{
+  font-family: 'Roboto';
+  font-size:1em;
+}
+
+.bookmark-app .MuiCard-root{
+  cursor: pointer;  
+  margin: 15px;
+  padding: 2px 10px 5px;
+}
+
+.bookmark-app .MuiCard-root h3{
+  padding-top: 8px;
+  margin-bottom: 4px;
+}
+
+.bookmark-app .MuiCard-root:hover{
+  background-color: rgba(197, 212, 218,.2);
+}
+
+.bookmark-app .flex-row{
+  display: flex;
+  align-items: center;
+}
+
+.bookmark-app button.MuiButton-root{
+  color:#ccc;
+}
+
+.bookmark-app button.MuiButton-root:hover{
+  color:#1976d2;
+}
+
+.bookmark-app .add-area{
+  padding: 10px;
+}
+
+.bookmark-app .add-area button.MuiButton-root{
+  width:100%;
+}
+.bookmark-app .add-area button.MuiAutocomplete-clearIndicator{
+  display:none;
+}
+
+.bookmark-app .hidden{
+  display:none;
+}
