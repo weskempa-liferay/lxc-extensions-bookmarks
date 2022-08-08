@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
 
 class LXCBookmarkApp extends HTMLElement {
   connectedCallback() {
-    ReactDOM.createRoot(this).render(<App />);
+    ReactDOM.createRoot(this).render(
+        <App />
+    );
   }
 }
 

@@ -1,18 +1,22 @@
 import React from 'react';
-import './App.css';
 
 import UserBookmark from './components/UserBookmark';
 import AddBookmark from './components/AddBookmark';
 import LiferayApi from './services/liferay/api';
 
-let bookmarkUser = 0;
-let siteId = 0;
-let bookmarkStructureId = 0;
-let userConfigurationId = 0;
-let defaultbookmarks = [];
+// Disconnected Defaults
+// Defaults should be managed through Remote App Properties
+// See https://github.com/weskempa-liferay/lxc-extensions-bookmarks
+let bookmarkUser = 20125; //default admin
+let siteId = 20121; //default site
+let bookmarkStructureId = 41303;
+let defaultbookmarks = [42517,42937,42505];
+
+// Initial Config
 let allBookmarks = [];
 let bookmarkData = [];
 let articleKeys = {};
+let userConfigurationId = 0;
 
 class App extends React.Component {
   
@@ -29,7 +33,7 @@ class App extends React.Component {
       articleKeys[this.state.userBookmarks[key].id]=this.state.userBookmarks[key].title
     }
 
-    if(this.state.userConfiguration!=""){
+    if(this.state.userConfiguration!==""){
       let userConfig = this.state.userConfiguration;
 
       for (let articleId in userConfig){
@@ -80,7 +84,7 @@ class App extends React.Component {
 
   findBookmarkId = (name) => {
     for(let key in bookmarkData){
-      if(bookmarkData[key].title == name)
+      if(bookmarkData[key].title === name)
         return bookmarkData[key].id;
     }
     return 0;
@@ -88,7 +92,7 @@ class App extends React.Component {
 
   findUrl = (articleId) => {
     for(let key in bookmarkData){
-      if(bookmarkData[key].id == articleId){
+      if(bookmarkData[key].id === articleId){
         return bookmarkData[key].friendlyUrlPath;
       }
     }
@@ -138,7 +142,7 @@ class App extends React.Component {
   }
 
   createBookmarkConfig = (defaultConfig) => {
-    LiferayApi("o/c/userbookmarks/scopes/"+siteId,{
+    LiferayApi("/o/c/userbookmarks/scopes/"+siteId,{
       method: 'POST', 
       body: {
           "bookmarkAssociations": '{"config":['+defaultConfig+']}',
@@ -165,7 +169,7 @@ class App extends React.Component {
       //console.warn('Not able to find Liferay object', error);
     }
 
-    LiferayApi("o/headless-delivery/v1.0/content-structures/"+bookmarkStructureId+"/structured-contents")
+    LiferayApi("/o/headless-delivery/v1.0/content-structures/"+bookmarkStructureId+"/structured-contents")
     .then((result) => {
       allBookmarks = this.uniqueBookmarks(result.data.items);
       bookmarkData = result.data.items;
@@ -178,7 +182,7 @@ class App extends React.Component {
     })
     .catch(console.log);
 
-    LiferayApi("o/c/userbookmarks/scopes/"+siteId+"?filter=bookmarkUser%20eq%20"+bookmarkUser)
+    LiferayApi("/o/c/userbookmarks/scopes/"+siteId+"?filter=bookmarkUser%20eq%20"+bookmarkUser)
     .then((result) => {
       let bookmarkAssociations = defaultbookmarks;
 

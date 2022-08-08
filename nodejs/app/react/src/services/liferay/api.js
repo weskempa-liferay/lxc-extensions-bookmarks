@@ -1,5 +1,3 @@
-const {REACT_APP_LIFERAY_API = window.location.origin} = process.env;
-
 export const getLiferayAuthenticationToken = () => {
 	try {
 		// eslint-disable-next-line no-undef
@@ -19,7 +17,11 @@ const baseFetch = async (url, {body, method = 'GET'} = {}) => {
 		'x-csrf-token': getLiferayAuthenticationToken()
 	})
 
-	let apiPath = REACT_APP_LIFERAY_API;
+	let apiPath = "http://localhost:8080";
+
+	if(document.getElementsByTagName("lxc-bookmarks")[0].getAttribute("defaultapiroot")!==null){
+		apiPath = document.getElementsByTagName("lxc-bookmarks")[0].getAttribute("defaultapiroot");
+	}
 
 	// Basic Auth for local development testing only
 	// Auth token is the best method for live use and
@@ -30,10 +32,9 @@ const baseFetch = async (url, {body, method = 'GET'} = {}) => {
 	    	'Authorization': 'Basic ' + btoa('test@liferay.com:portal4all'), 
 			'Content-Type': 'application/json'
 	    });
-	    apiPath = "http://localhost:8080";
 	}
 
-	const response = await fetch(apiPath + '/' + url, {
+	const response = await fetch(apiPath + url, {
 		...(body && {body: JSON.stringify(body)}),
 		headers: headers,
 		method,
@@ -44,6 +45,5 @@ const baseFetch = async (url, {body, method = 'GET'} = {}) => {
 	return {data};
 };
 
-export {REACT_APP_LIFERAY_API};
 
 export default baseFetch;

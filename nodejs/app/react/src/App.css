@@ -11,7 +11,7 @@
 
 .bookmark-app .MuiCard-root h3{
   padding-top: 8px;
-  margin-bottom: 4px;
+  margin: 0 0 4px 0;
 }
 
 .bookmark-app .MuiCard-root:hover{
