@@ -7,7 +7,7 @@ const port = 8080;
 const host = "0.0.0.0";
 
 const requestListener = function (req, res) {
-    fs.readFile(__dirname + "/react/static/js/main.js")
+    fs.readFile(__dirname + "/react/build/static/js/main.js")
         .then(contents => {
             res.setHeader("Content-Type", "text/html");
             res.writeHead(200);
