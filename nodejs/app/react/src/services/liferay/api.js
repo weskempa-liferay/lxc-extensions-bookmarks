@@ -10,10 +10,23 @@ export const getLiferayAuthenticationToken = () => {
 	}
 };
 
+export const getLiferayLanguagePreference = () => {
+	try {
+		// eslint-disable-next-line no-undef
+		const language = Liferay.ThemeDisplay.getLanguageId();
+
+		return language.replace("_","-");
+	} catch (error) {
+		//console.warn('Not able to find Liferay auth token\n', error);
+		return '';
+	}
+};
+
 const baseFetch = async (url, {body, method = 'GET'} = {}) => {
 
     let headers = new Headers({
 		'Content-Type': 'application/json',
+		'Accept-Language': getLiferayLanguagePreference(),
 		'x-csrf-token': getLiferayAuthenticationToken()
 	})
 
@@ -21,6 +34,10 @@ const baseFetch = async (url, {body, method = 'GET'} = {}) => {
 
 	if(document.getElementsByTagName("lxc-bookmarks")[0].getAttribute("defaultapiroot")!==null){
 		apiPath = document.getElementsByTagName("lxc-bookmarks")[0].getAttribute("defaultapiroot");
+	}
+
+	if(apiPath==="auto"){
+		apiPath = window.location.origin;
 	}
 
 	// Basic Auth for local development testing only

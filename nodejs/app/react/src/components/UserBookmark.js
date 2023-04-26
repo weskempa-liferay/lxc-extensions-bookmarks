@@ -18,9 +18,9 @@ class UserBookmark extends React.Component {
     render() {
 
         return <Card key={this.props.id} variant="outlined"  onClick={this.handleNavigate}>
-            <div className="flex-row" id={this.props.id}>
+            <div className="flex-row record" id={this.props.id}>
                 <div>
-                    <h3>{this.props.title}</h3>
+                    <h4>{this.props.title}</h4>
                 </div>
                 <div>
                     <Button onClick={this.handleDeleteClick}  id={this.props.id}>

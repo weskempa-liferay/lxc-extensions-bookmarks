@@ -127,7 +127,7 @@ class App extends React.Component {
   }
 
   submitBookmarkUpdate = (updatedConfig) => {
-    LiferayApi("o/c/userbookmarks/"+userConfigurationId,{
+    LiferayApi("/o/c/userbookmarks/"+userConfigurationId,{
       method: 'PUT', 
       body: {
           "bookmarkAssociations": '{"config":'+updatedConfig+'}',
